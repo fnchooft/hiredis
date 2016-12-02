@@ -91,7 +91,10 @@ hiredis-example-libevent: examples/example-libevent.c adapters/libevent.h $(STLI
 	$(CC) -o examples/$@ $(REAL_CFLAGS) $(REAL_LDFLAGS) -I. $< -levent $(STLIBNAME)
 
 hiredis-example-libev: examples/example-libev.c adapters/libev.h $(STLIBNAME)
-	$(CC) -o examples/$@ $(REAL_CFLAGS) $(REAL_LDFLAGS) -I. $< -lev $(STLIBNAME)
+	$(CC) -o examples/$@ $< $(REAL_CFLAGS) $(REAL_LDFLAGS) $(shell pkg-config --cflags --libs libev) -I. $(STLIBNAME)
+
+hiredis-example-libev-subscribe: examples/example-libev-subscribe.c adapters/libev.h $(STLIBNAME)
+	$(CC) -o examples/$@ $< $(REAL_CFLAGS) $(REAL_LDFLAGS) $(shell pkg-config --cflags --libs libev) -I. $(STLIBNAME)
 
 hiredis-example-glib: examples/example-glib.c adapters/glib.h $(STLIBNAME)
 	$(CC) -o examples/$@ $(REAL_CFLAGS) $(REAL_LDFLAGS) $(shell pkg-config --cflags --libs glib-2.0) -I. $< $(STLIBNAME)
